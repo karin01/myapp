@@ -1,0 +1,67 @@
+{{set . "title" "Home"}}
+{{template "Board/header.html" .}}
+			<table id="table_board" class="list">
+				<colgroup>
+					<col width="70">
+					<col width="58%">
+					<col width="120">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+				</colgroup>
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>책제목</th> 
+						<th>저자</th>
+						<th>출판사</th>
+						<th>작성일</th>
+						<th>조회수</th>						
+					</tr>
+				</thead>
+				<tbody>
+					{{if not .articles}}
+					<tr>
+						<td colspan="6">게시글이 없습니다. </td>
+					</tr>
+					{{else}}
+					{{range .articles}}
+					<tr>
+						<td>{{.Id}}</td>
+						<td><a href="{{url "Board.Read" .Id}}">{{.BookName}}</a></td>
+						<td>{{.Writer}}</td>	
+						<td>{{.Publisher}}</td>
+						<td>{{.DayWrite.Format "2006-01-02"}}</td>
+						<td>0</td>
+					</tr>
+					{{end}}
+					{{end}}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="6">
+							<!--BeginPage : {{.pageinfo.BeginPage}}<br>
+							EndPage : {{.pageinfo.EndPage}}<br>
+							TotalPageCount : {{.pageinfo.TotalPageCount}}<br>
+							PrevBeginPage : {{.pageinfo.PrevBeginPage}}<br>
+							NextEndPage : {{.pageinfo.NextEndPage}}<br>-->
+							<div align="center">
+								{{if gt .pageinfo.BeginPage 10}}
+									<a href="{{url "Board.Index" .pageinfo.PrevBeginPage}}" ref="prev">이전</a>
+								{{end}}
+								{{ range .pageinfo.Pagenation}}
+									<a href="{{url "Board.Index" .}}">{{.}}</a>
+								{{end}}
+								{{if lt .pageinfo.EndPage .pageinfo.TotalPageCount}}
+									<a href="{{url "Board.Index" .pageinfo.NextEndPage}}" ref="next">다음</a>
+								{{end}}
+									<a href="{{url "Board.FormWrite" }}">글쓰기</a>
+							</div>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>	
+
+
+{{template "Board/footer.html" .}}

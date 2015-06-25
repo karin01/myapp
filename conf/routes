@@ -1,0 +1,33 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+module:testrunner
+
+#게시판 처음
+GET     /                       	App.Index
+GET		/board/:RequestPage/page	Board.Index
+GET		/board						Board.Index
+GET		/board/dummy				Board.Dummy
+
+#게시판 글쓰기 폼과 글쓰기
+GET		/board/글쓰기					Board.FormWrite
+POST	/board						Board.Post		
+
+#읽고 삭제하고 업데이트
+GET		/board/:Id					Board.Read
+GET		/board/:Id/delete			Board.Delete
+
+#수정폼과 수정
+GET		/board/:Id/update			Board.FormUpdate
+POST	/board/:Id					Board.Update
+
+
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/*filepath                       Static.Serve("public")
+
+# Catch all
+*       /:controller/:action                    :controller.:action
